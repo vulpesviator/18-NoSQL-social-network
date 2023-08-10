@@ -2,6 +2,7 @@ const express = require('express');
 const db = require('./config/connection');
 const routes = require('./routes');
 
+// Inbuilt method of the process module to get the current working directory for node
 const cwd = process.cwd();
 
 const PORT = process.env.PORT || 3001;
@@ -12,10 +13,12 @@ const activity = cwd.includes('01-Activities')
   ? cwd.split('01-Activities')[1]
   : cwd;
 
+// Middleware for supporting routes in express
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(routes);
 
+// Initializes the server and logs the port once the database connection is established
 db.once('open', () => {
   app.listen(PORT, () => {
     console.log(`API server for ${activity} running on port ${PORT}!`);
