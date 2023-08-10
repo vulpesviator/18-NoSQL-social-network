@@ -13,6 +13,7 @@ const userSchema = new Schema(
             required: true,
             unique: true,
             // match: must match an email address
+            match: [/.+@.+\..+/, 'You must use a valid email address!'],
         },
         thoughts: [
             {
@@ -36,6 +37,9 @@ const userSchema = new Schema(
 );
 
 // Create a virtual called `friendCount` that retrieves the length of the user's `friends` array field on query.
+userSchema.virtual('friendCount').get(function () {
+    return this.friends.length;
+})
 
 
 const User = model('User', userSchema);
