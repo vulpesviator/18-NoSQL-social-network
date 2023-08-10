@@ -45,6 +45,23 @@ module.exports = {
         }
     },
 
+    async updateThought(req, res) {
+        try {
+            const dbThoughtData = await Thought.findOneAndUpdate(
+                { _id: req.params.thoughtId },
+                { $set: req.body },
+                { runValidators: true, new: true }
+            );
+            if (!dbThoughtData) {
+                return res.status(404).json({ message: 'Thought with this ID does not exist.' });
+            }
+            res.json(dbThoughtData);
+            
+        } catch (err) {
+            res.status(500).json(err);
+        }
+    },
+
     async deleteThought(req, res) {
         try {
             const dbThoughtData = await Thought.findOneAndRemove({ _id: req.params.thoughtId });
