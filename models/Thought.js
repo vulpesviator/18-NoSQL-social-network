@@ -1,7 +1,9 @@
+// imports DayJS package to create timestamp
 const dayjs = require('dayjs');
 const { Schema, model } = require('mongoose');
 const reactionSchema = require('./Reaction');
 
+// Defines fields for the Thoughts
 const thoughtSchema = new Schema(
     {
         thoughtText: {
@@ -13,6 +15,7 @@ const thoughtSchema = new Schema(
         createdAt: {
             type: Date,
             default: Date.now,
+            // Getter method for formatting the timestamp
             get: (timestamp) => dayjs(timestamp).format('MMM D, YYYY [at] h:mm A'),
         },
         username: {
